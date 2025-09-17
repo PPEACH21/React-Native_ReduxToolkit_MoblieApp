@@ -26,16 +26,14 @@ const CustomHeaderBar = (props) => {
 }
 
 const CustomDrawerContent = (props) => {
-    const { navigation, state, descriptors } = props
+    const { state, descriptors } = props
     const LOGO = { uri: 'https://i.ibb.co/yyzQ43h/KU-Logo-PNG.png' }
     let target = state.routes.find(obj => {
         return obj.name === 'Show'
     })
 
     let result = descriptors[target.key]
-    let width = parseInt(result.options.drawerStyle.width * 0.5)
-    let height = width
-
+    let width = parseInt(result.options.drawerStyle.width * 0.4)
     return (
         <DrawerContentScrollView {...props}
             contentContainerStyle={{ flex: 1 }}
@@ -50,7 +48,7 @@ const CustomDrawerContent = (props) => {
     )
 }
 
-export const DrawerNav = (props) => {
+export const DrawerNav = () => {
   //console.log(`At DrawerNav addTodo: ${props.addTodo}`)
   const Drawer = createDrawerNavigator()
   return (
@@ -63,8 +61,8 @@ export const DrawerNav = (props) => {
           drawerStyle: styles.drawerStyle,
           headerTitleStyle: styles.headerTitleStyle,
           header: (props) => <CustomHeaderBar {...props} />,
-          drawerActiveTintColor: '#447706',
-          drawerInactiveTintColor: '#A8A9A6',
+          drawerActiveTintColor: '#5D2F77',
+          drawerInactiveTintColor: '#746c79ff',
           drawerLabelStyle: styles.drawerLabelStyle
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -115,26 +113,26 @@ const styles = StyleSheet.create({
     headerStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#2A4602',
+        backgroundColor: '#5D2F77',
         paddingVertical:20,
-        paddingLeft: 5,
+        paddingLeft: 15,
         borderWidth: 0,
     },
     headerTitleStyle: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
         paddingHorizontal: 20,
     },
     drawerStyle: {
         backgroundColor: '#F9FAF7',
-        width: parseInt(WIDTH * 0.4),
+        width: parseInt(WIDTH * 0.6),
         height: '100%',
     },
     drawerLabelStyle: {
         fontSize: 15,
         fontWeight: '900',
-        color: '#447706',
+        color: '#5D2F77',
         size: 30,
     }
 })

@@ -21,7 +21,7 @@ export const ShowScreen = () => {
 
   const renderItem = ({ item, index }) => {
     const backgroundColor = item.id === selectedId ? "#BEC1BA" : "#fff"
-    const textColor = item.id === selectedId ? "#447706" : "#B26B0B"
+    const textColor = item.id === selectedId ? "#447706" : "#E45A92"
     return (
       <ShowItem
           style={{ flex: 1 }}
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     },
     bigText: {
         fontSize: 30,
-        color: '#B26B0B',
+        color: '#E45A92',
     },
 })

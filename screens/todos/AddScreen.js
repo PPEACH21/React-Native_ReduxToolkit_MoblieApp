@@ -35,7 +35,7 @@ export const AddScreen = (props) => {
         </View>
         <View style={{ flex: 3, paddingTop: 50}}>
             <TouchableOpacity
-                style={{ backgroundColor: '#B26B0B', borderRadius: 40 }}
+                style={{ backgroundColor: '#E45A92', borderRadius: 40 }}
                 onPress={onSavePress}
             >
                 <Text style={[styles.label, { color: '#fff', fontWeight: 'bold', textAlign: 'center' }]}>Submit</Text>
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     label: {
-        fontSize: 40,
+        fontSize: 35,
         color: '#000',
     },
     input: {
         borderWidth: 1,
-        borderColor: '#2A4602',
+        borderColor: '#4d7219ff',
         borderRadius: 5,
         alignItems: 'stretch',
         paddingLeft: 10,

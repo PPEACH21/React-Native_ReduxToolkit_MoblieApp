@@ -7,7 +7,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTodo, editTodo } from '../../redux/todos/todosSlicer'
 
-const ShowItem = ({ item, backgroundColor, textColor, setSelectedId, deleteTodo }) => {
+const ShowItem = ({ item, backgroundColor, textColor, setSelectedId, onDelete }) => {
   return (
       <View style={{ margin: 10, backgroundColor }}>
           <Text style={[styles.bigText, { color: textColor, paddingVertical: 10 }]} >{item.task}</Text>
@@ -21,7 +21,7 @@ const ShowItem = ({ item, backgroundColor, textColor, setSelectedId, deleteTodo 
               </TouchableOpacity>
               <TouchableOpacity
                   style={[styles.textLine, { backgroundColor }]}
-                  onPress={() => deleteTodo(item.id)}
+                  onPress={() => onDelete(item.id)}
               >
                   <Feather name='delete' size={24} color='black' />
               </TouchableOpacity>
@@ -31,7 +31,7 @@ const ShowItem = ({ item, backgroundColor, textColor, setSelectedId, deleteTodo 
   )
 }
 
-const EditItem = ({ item, backgroundColor, textColor,editTodo }) => {
+const EditItem = ({ item, backgroundColor,editTodo ,setSelectedId}) => {
   const [newTask, setNewTask] = useState(item.task)
   return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -41,7 +41,10 @@ const EditItem = ({ item, backgroundColor, textColor,editTodo }) => {
               style={[{ borderWidth: 1, backgroundColor, borderRadius: 10 }, styles.bigText, styles.container]}
           />
           <TouchableOpacity
-              onPress={() => editTodo(item.id, newTask)}
+              onPress={() => {
+                editTodo(item.id, newTask)
+                setSelectedId(false)
+            }}
           >
               <Feather name='save' size={35} color='black' />
           </TouchableOpacity>
@@ -54,17 +57,15 @@ export const EditScreen = (props) => {
   const navigation = props.nav.navigation
   //console.log(`navigation: ${navigation.navigate}`)
 
-  //An array below will be changed from local state to global state and also slicers
   const todos = useSelector((state)=>state.todos)
   const dispatch = useDispatch();
-//   console.log(`Editscreen ${props.todoList}`)
   
   const [selectedId, setSelectedId] = useState(null)
 
   const renderItem = ({ item, index }) => {
       //console.log(selectedId)
-      const backgroundColor = item.id === selectedId ? "#BEC1BA" : "#fff"
-      const textColor = item.id === selectedId ? "#447706" : "#B26B0B"
+      const backgroundColor = item.id === selectedId ? "#e7e7e7ff" : "#fff"
+      const textColor = item.id === selectedId ? "#FFACAC" : "#E45A92"
       return (
           (item.id !== selectedId) ?
               <ShowItem
@@ -73,7 +74,7 @@ export const EditScreen = (props) => {
                   backgroundColor={backgroundColor}
                   textColor={textColor}
                   setSelectedId={setSelectedId}
-                  deleteTodo={(id) => dispatch(deleteTodo(id))}
+                  onDelete={(id) => dispatch(deleteTodo(id))}
               />
               :
               <EditItem
@@ -81,6 +82,7 @@ export const EditScreen = (props) => {
                   key={index}
                   onItemPress={() => setSelectedId(item.id)}
                   editTodo={(id, task) => dispatch(editTodo({ id, task }))}
+                  setSelectedId={setSelectedId}
                   backgroundColor={backgroundColor}
                   textColor={textColor}
               />
