@@ -69,11 +69,7 @@ export const DrawerNav = (props) => {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name='Show' component={() => {
-        return (
-          <ShowScreen todoList={props.todoList}/>
-        )
-      }}
+      <Drawer.Screen name='Show'
         options={{
             title: 'Show',
             drawerLabel: 'Show',
@@ -81,13 +77,11 @@ export const DrawerNav = (props) => {
                 <Ionicons name={focused ? 'list-circle' : 'list-circle-outline'} size={size} color={color} />
             )
         }}
-      />
-      <Drawer.Screen name='Add' component={(nav) => {
-        //console.log(`Nav:${nav.navigation}`)
-        return (
-          <AddScreen addTodo={props.addTodo} nav={nav}/>
-        )
-      }}
+        component={ShowScreen}
+      >
+      </Drawer.Screen>
+      <Drawer.Screen 
+        name='Add' 
         options={{
             title: 'Add',
             drawerLabel: 'Add',
@@ -95,12 +89,11 @@ export const DrawerNav = (props) => {
                 <MaterialCommunityIcons name={focused ? 'text-box-plus' : 'text-box-plus-outline'} size={size} color={color} />
             )
         }}
-      />
-      <Drawer.Screen name='Edit' component={(nav) => {
-        return (
-          <EditScreen todoList={props.todoList} editTodo={props.editTodo} deleteTodo={props.deleteTodo} nav={nav} />
-        )
-      }}
+      >
+         {(nav) => <AddScreen nav={nav} />}
+      </Drawer.Screen>
+      <Drawer.Screen 
+        name='Edit' 
         options={{
             title: 'Edit',
             drawerLabel: 'Edit',
@@ -108,7 +101,9 @@ export const DrawerNav = (props) => {
                 <MaterialCommunityIcons name={focused ? 'content-save-edit' : 'content-save-edit-outline'} size={size} color={color} />
             )
         }}
-      />
+        >
+          {(nav) => <EditScreen nav={nav} />}
+      </Drawer.Screen>
     </Drawer.Navigator>
   )
 }

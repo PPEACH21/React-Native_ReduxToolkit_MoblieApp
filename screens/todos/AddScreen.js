@@ -1,16 +1,17 @@
 import {Text, StyleSheet, View, TouchableOpacity, TextInput} from 'react-native'
 import {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
+import { addTodo } from '../../redux/todos/todosSlicer'
 
 export const AddScreen = (props) => {
   const navigation = props.nav.navigation
-  //console.log(`navigation: ${navigation.navigate}`)
-  const addTodo = props.addTodo
+  const dispatch = useDispatch();
   // console.log(`addTodo: ${addTodo}`)
 
-  const [task, setTask] = useState()
+  const [task, setTask] = useState("")
   const onSavePress = () => {
-    addTodo(task)
+    dispatch(addTodo(task))
     setTask('')
   }
 

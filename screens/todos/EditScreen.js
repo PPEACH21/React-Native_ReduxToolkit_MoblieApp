@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { act, useState } from 'react'
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons'
 import { TextInput } from 'react-native-gesture-handler'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteTodo, editTodo } from '../../redux/todos/todosSlicer'
 
 const ShowItem = ({ item, backgroundColor, textColor, setSelectedId, deleteTodo }) => {
   return (
@@ -52,10 +55,9 @@ export const EditScreen = (props) => {
   //console.log(`navigation: ${navigation.navigate}`)
 
   //An array below will be changed from local state to global state and also slicers
-  const todoList = props.todoList
-  const editTodo = props.editTodo
-  const deleteTodo = props.deleteTodo
-  console.log(`Editscreen ${props.todoList}`)
+  const todos = useSelector((state)=>state.todos)
+  const dispatch = useDispatch();
+//   console.log(`Editscreen ${props.todoList}`)
   
   const [selectedId, setSelectedId] = useState(null)
 
@@ -71,14 +73,14 @@ export const EditScreen = (props) => {
                   backgroundColor={backgroundColor}
                   textColor={textColor}
                   setSelectedId={setSelectedId}
-                  deleteTodo={deleteTodo}
+                  deleteTodo={(id) => dispatch(deleteTodo(id))}
               />
               :
               <EditItem
                   item={item}
                   key={index}
                   onItemPress={() => setSelectedId(item.id)}
-                  editTodo={editTodo}
+                  editTodo={(id, task) => dispatch(editTodo({ id, task }))}
                   backgroundColor={backgroundColor}
                   textColor={textColor}
               />
@@ -88,7 +90,7 @@ export const EditScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <FlatList
         style={{flex:6}}
-          data={todoList}
+          data={todos}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           extraData={selectedId}

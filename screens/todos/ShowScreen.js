@@ -14,8 +14,8 @@ const ShowItem = ({ item, backgroundColor, textColor, onItemPress }) => {
 }
 
 export const ShowScreen = () => {
-  //console.log(`Showscreen ${props.todoList}`)
   const todoList = useSelector((state) => state.todos)
+  // console.log(`Showscreen ${todoList}`)
 
   const [selectedId, setSelectedId] = useState(null)
 
